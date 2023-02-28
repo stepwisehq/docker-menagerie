@@ -9,6 +9,7 @@ services:
     environment:
       StepWise_ConnectionStrings__DefaultConnection: Host=postgres;Database=stepwise;Username=postgres;Password=password;Minimum Pool Size=5;Maximum Pool Size=5;Application Name=StepWise;Max Auto Prepare=50;Auto Prepare Min Usages=1
       StepWise_Kestrel__Endpoints__Http__Url: http://0.0.0.0:5000
+      StepWise_Data__AutoMigrate: true
     command: "./StepWise.Server"
   postgres:
     image: postgres:14
