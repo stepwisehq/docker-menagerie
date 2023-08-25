@@ -7,9 +7,15 @@ services:
     links:
     - postgres
     environment:
-      StepWise_ConnectionStrings__DefaultConnection: Host=postgres;Database=stepwise;Username=postgres;Password=password;Minimum Pool Size=5;Maximum Pool Size=5;Application Name=StepWise;Max Auto Prepare=50;Auto Prepare Min Usages=1
-      StepWise_Kestrel__Endpoints__Http__Url: http://0.0.0.0:5000
-      StepWise_Data__AutoMigrate: true
+      SW_ConnectionStrings__DefaultConnection: Database=stepwise;Minimum Pool Size=5;Maximum Pool Size=5;Application Name=StepWise;Max Auto Prepare=50;Auto Prepare Min Usages=1
+      SW_Kestrel__Endpoints__Http__Url: http://0.0.0.0:5000
+      SW_Data__AutoMigrate: true
+      SW_Data__DbHost: postgres
+      SW_Data__DbUsername: postgres
+      SW_Data__DbPassword: password
+      SW_Mail__Smtp__Host: smtp
+      SW_Mail__Smtp__Port": 2525
+      SW_Mail__Smtp__DefaultSender: "noreply@acme.com"
     command: "./StepWise.Server"
   postgres:
     image: postgres:14
@@ -20,6 +26,12 @@ services:
     environment:
       POSTGRES_PASSWORD: password
     shm_size: 1g
+  smtp:
+    image: rnwood/smtp4dev
+    expose:
+    - "25"
+    ports:
+    - "3001:80"
 
 
 volumes: { stepwise-postgres: {}}
